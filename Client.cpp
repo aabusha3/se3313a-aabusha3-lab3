@@ -57,4 +57,17 @@ public:
 int main(void)
 {
 	cout << "I am a client" << endl;
+	bool active = true;
+
+	Socket socket("127.0.0.1", 3000);
+	ClientThread clientThread(socket, active);
+	socket.Open();
+
+	while(active){
+		sleep(1);
+	}
+
+	socket.Close();
+	
+	return 0;
 }

@@ -25,8 +25,7 @@ public:
     : socket(socket), terminate(terminate), sockThrHolder(clientSockThr)
     {}
 
-    ~SocketThread()
-    {this->terminationEvent.Wait();}
+    ~SocketThread(){this->terminationEvent.Wait();}
 
     Socket& GetSocket()
     {

@@ -1,4 +1,6 @@
 #include "socket.h"
+#include "thread.h"
+#include "Blockable.h"
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
@@ -45,7 +47,7 @@ public:
 					break;
 				}
 
-				cout<<"Server Response: " << data.ToString() << endl;
+				cout<<"Server Response: '" << data.ToString() << endl;
 			}catch (string err){
                 cout<<err<<endl;
             }

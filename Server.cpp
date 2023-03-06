@@ -1,5 +1,6 @@
 #include "thread.h"
 #include "socketserver.h"
+#include "Blockable.h"
 #include <stdlib.h>
 #include <time.h>
 #include <list>
@@ -13,11 +14,8 @@ class SocketThread : public Thread
 {
 private:
     Socket& socket;
-    
     ByteArray data;
-
     bool &terminate;
-
     vector<SocketThread*> &sockThrHolder;
 
 public:
@@ -38,7 +36,6 @@ public:
             while(!terminate){
                 socket.Read(data);
 
-                // Perform operations on the data
                 string res = data.ToString();
                 for_each(res.begin(), res.end(), [](char & res){
                     res = ::toupper(res);
@@ -52,17 +49,11 @@ public:
                 }
                 
                 
-                res.append("-received");
-                // Send it back
+                res.append("'");
                 socket.Write(ByteArray(res));
 
             }
-            
-        }catch (string &s){
-            cout<<s<<endl;
-        }
-		
-        catch (string err){
+        }catch (string err){
             cout<<err<<endl;
         }
         cout<<"Client Disconnected" <<endl;
@@ -103,8 +94,7 @@ public:
 
                 Socket& socketReference = *newConnection;
                 sockThrHolder.push_back(new SocketThread(socketReference, terminate, ref(sockThrHolder)));
-            }catch (string error){
-                cout << "ERROR: " << error << endl;
+            }catch (string end){
                 return 1;
             }
 			

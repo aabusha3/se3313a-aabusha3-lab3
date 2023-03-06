@@ -42,6 +42,7 @@ Socket & Socket::operator=(Socket const & rhs)
     socketDescriptor = rhs.socketDescriptor;
     SetFD(dup(rhs.GetFD()));
     open = rhs.open;
+    return*this;
 }
 
 Socket::~Socket(void)
@@ -56,8 +57,11 @@ int Socket::Open(void)
     if (connectReturn != 0)
     {
         throw std::string("Unable to open connection");
+        return -1;
     }
     open = true;
+    return 1;
+
 }
 
 int Socket::Write(ByteArray const & buffer)
